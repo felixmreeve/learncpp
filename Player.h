@@ -1,0 +1,32 @@
+#ifndef _PLAYER_H_
+#define _PLAYER_H_
+
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
+
+#include "Sprite.h"
+
+class Player
+{
+	protected:
+		double _maxVel;
+		double _acceleration;
+		double _xPos;
+		double _yPos;
+		double _xVel;
+		double _yVel;
+		
+		Sprite _sprite;
+	public:
+		Player(double maxVel, double acceleration, double xPos, double yPos);
+		void update(int xMouse, int yMouse, bool aim, const Uint8 *keyState);
+		void render(SDL_Renderer *renderer);
+		void close();
+		void updateHead(int xMouse, int yMouse, bool aim, const Uint8 *keyState);
+		void mouseAcceleration(double *xAcc, double *yAcc, int mouseX, int mouseY);
+		void keyStateAcceleration(double *xAcc, double *yAcc, const Uint8 *keyState);
+		double getTotVel();
+		void getPos(int *x, int *y);
+};
+#endif
