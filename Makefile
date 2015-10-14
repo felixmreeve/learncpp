@@ -3,7 +3,7 @@ COMPILER = g++
 PROGNAME = main
 OUTPUT = -o
 OPTIONS = -Wall -c
-HEADERS = GC.h GameManager.h Player.h Sprite.h Eye.h 
+HEADERS = GC.h GameManager.h Background.h Player.h Food.h Sprite.h Eye.h 
 
 $(PROGNAME): $(OBJECTS)
 	$(COMPILER) $(OBJECTS) -Wall -l SDL2 -l SDL2_image -l SDL2_ttf -l m $(OUTPUT) $(PROGNAME)

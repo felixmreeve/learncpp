@@ -8,38 +8,32 @@
 #include "GC.h"
 
 Background::Background():
-	_surface( SDL_CreateRGBSurface( 0, GC::SCREEN_WIDTH, GC::SCREEN_HEIGHT, 32, 0, 0, 0, 0 ) ),
+	_surface( SDL_CreateRGBSurface(0, GC::SCREEN_WIDTH, GC::SCREEN_HEIGHT, 32, 0, 0, 0, 0) ),
 	_r( 255 ),
 	_g( 0 ),
 	_b( 0 ),
-	_aim( RED )
+	_colourAim( RED ),
+	_changeRate( 0.1 )
 {}
 
 void Background::update()
 {
-	printf("%d\n", _r);
-	printf("%d\n", _g);
-	printf("%d\n", _b);
-	if(_r>=255) _aim = GREEN;
-	if(_g>=255) _aim = BLUE;
-	if(_b>=255) _aim = RED;
+	if(_r>=255) _colourAim = GREEN;
+	if(_g>=255) _colourAim = BLUE;
+	if(_b>=255) _colourAim = RED;
 	
-	switch(_aim){
+	switch(_colourAim){
 		case RED:
-			printf("red\n");
 			changeColour(&_r, &_b);
 			break;
 		case GREEN:
-			printf("green\n");
 			changeColour(&_g, &_r);
 			break;
 		case BLUE:
-			printf("red\n");
 			changeColour(&_b, &_g);
 			break;
 	}
-	
-	Uint32 color = SDL_MapRGB(_surface->format, _r, _g, _b);
+	Uint32 color = SDL_MapRGB(_surface->format, round(_r), round(_g), round(_b));
 	
 	SDL_FillRect(_surface, NULL, color);
 }
@@ -69,8 +63,8 @@ void Background::drawPoint(int x, int y, int r, int g, int b)
 	pixels[x + y*_surface->w] = pixel;
 }
 
-void Background::changeColour(int *increase, int *decrease)
+void Background::changeColour(double *increase, double *decrease)
 {
-	(*increase)++;
-	(*decrease)--;
+	(*increase) += _changeRate;
+	(*decrease) -= _changeRate;
 }
