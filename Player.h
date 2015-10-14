@@ -20,11 +20,11 @@ class Player
 		Sprite _sprite;
 	public:
 		Player(double maxVel, double acceleration, double xPos, double yPos);
-		void update(int xMouse, int yMouse, bool aim, const Uint8 *keyState);
+		void update(bool aim, int xMouse, int yMouse, const Uint8 *keyState);
 		void render(SDL_Renderer *renderer);
 		void close();
-		void updateHead(int xMouse, int yMouse, bool aim, const Uint8 *keyState);
-		void mouseAcceleration(double *xAcc, double *yAcc, int mouseX, int mouseY);
+		void updateHead(bool aim, int xMouse, int yMouse, const Uint8 *keyState);
+		void acceleration(double *xAcc, double *yAcc, int aimX, int aimY);
 		void keyStateAcceleration(double *xAcc, double *yAcc, const Uint8 *keyState);
 		double getTotVel();
 		void getPos(int *x, int *y);

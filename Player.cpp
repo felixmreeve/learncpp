@@ -15,12 +15,13 @@ Player::Player(double maxVel, double acceleration, double xPos, double yPos):
 	_yPos( yPos ),
 	_xVel( 0 ),
 	_yVel( 0 ),
-	_sprite( "Head.png" )
-{}
+	_sprite( "hello" )
+{
+}
 
-void Player::update(int xMouse, int yMouse, bool aim, const Uint8 *keyState)
+void Player::update(bool aim, int xMouse, int yMouse, const Uint8 *keyState)
 {	
-	updateHead(xMouse, yMouse, aim, keyState);
+	updateHead(aim, xMouse, yMouse, keyState);
 }
 
 void Player::render(SDL_Renderer *renderer)
@@ -42,14 +43,14 @@ void Player::close()
 	_sprite.close();
 }
 
-void Player::updateHead(int xMouse, int yMouse, bool aim, const Uint8 *keyState)
+void Player::updateHead(bool aim, int xMouse, int yMouse, const Uint8 *keyState)
 {
 	// calculate accleration vector
 	double xAcc = 0;
 	double yAcc = 0;
 	
 	if(aim == true){
-		mouseAcceleration(&xAcc, &yAcc, xMouse, yMouse);
+		acceleration(&xAcc, &yAcc, xMouse, yMouse);
 	}
 	else{
 		keyStateAcceleration(&xAcc, &yAcc, keyState);
@@ -70,21 +71,37 @@ void Player::updateHead(int xMouse, int yMouse, bool aim, const Uint8 *keyState)
 	_yPos += _yVel;
 }
 
-void Player::mouseAcceleration(double *xAcc, double *yAcc, int mouseX, int mouseY)
+void Player::acceleration(double *xAcc, double *yAcc, int xAim, int yAim)
 {
-	double xDist = mouseX - _xPos;
-	double yDist = mouseY - _yPos;
-	double totDist = sqrt(xDist*xDist + yDist*yDist);
-	*xAcc += (_acceleration * xDist) / totDist;
-	*yAcc += (_acceleration * yDist) / totDist;
+	float xDist = xAim - _xPos;
+	float yDist = yAim - _yPos;
+	
+	if(abs(xDist) >= 1 || abs(yDist) >= 1)
+	{
+		double totDist = sqrt(xDist*xDist + yDist*yDist);
+		*xAcc += (_acceleration * xDist) / totDist;
+		*yAcc += (_acceleration * yDist) / totDist;
+	}
 }
 
 void Player::keyStateAcceleration(double *xAcc, double *yAcc, const Uint8 *keyState)
 {
-	if(keyState[SDL_SCANCODE_RIGHT]) *xAcc += _acceleration;
-	if(keyState[SDL_SCANCODE_LEFT])  *xAcc -= _acceleration;
-	if(keyState[SDL_SCANCODE_DOWN])  *yAcc += _acceleration;
-	if(keyState[SDL_SCANCODE_UP])    *yAcc -= _acceleration;
+	int xDir = 0;
+	int yDir = 0;
+	int aimDist = 10;
+	
+	if(keyState[SDL_SCANCODE_RIGHT]) xDir += aimDist;
+	if(keyState[SDL_SCANCODE_LEFT])  xDir -= aimDist;
+	if(keyState[SDL_SCANCODE_DOWN])  yDir += aimDist;
+	if(keyState[SDL_SCANCODE_UP])    yDir -= aimDist;
+		
+	int xAim = _xPos + xDir;
+	int yAim = _yPos + yDir;
+	
+	acceleration(xAcc, yAcc, xAim, yAim);
+	
+	//FIX SO TOTACCELERATION IS 
+	
 }
 
 double Player::getTotVel()

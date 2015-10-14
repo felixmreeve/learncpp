@@ -13,14 +13,14 @@ GameManager::GameManager(GC gc) :
 	_click( false ),
 	_mouseX( GC::SCREEN_WIDTH/2 ),
 	_mouseY( GC::SCREEN_HEIGHT/2 ),
+	_keyState( SDL_GetKeyboardState(NULL) ),
 	_player( GC::PLAYER_SPEED, GC::PLAYER_ACCELERATION, GC::SCREEN_WIDTH/2, GC::SCREEN_HEIGHT/2 ),
 	_window( SDL_CreateWindow("THING", 10, 10, GC::SCREEN_WIDTH, GC::SCREEN_HEIGHT, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE) ),
 	_renderer( SDL_CreateRenderer(_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC) )
 {}
 
-void GameManager::update()
+void GameManager::checkInput()
 {
-	const Uint8 *state = SDL_GetKeyboardState(NULL);
 	SDL_Event incomingEvent;
 	//check incoming events
 	while(SDL_PollEvent(&incomingEvent)){
@@ -43,7 +43,11 @@ void GameManager::update()
 	}
 	
 	SDL_GetMouseState(&_mouseX, &_mouseY);
-	_player.update(_mouseX, _mouseY, _click, state);
+}
+
+void GameManager::update()
+{
+	_player.update(_click, _mouseX, _mouseY, _keyState);
 }
 
 void GameManager::render()

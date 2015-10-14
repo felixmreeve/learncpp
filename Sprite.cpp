@@ -6,7 +6,7 @@
 
 Sprite::Sprite(char *file):
 	_img( IMG_Load(file) )
-{}
+{if(_img == NULL) std::cout<<"no image"<<std::endl;}
 
 void Sprite::render(SDL_Renderer *renderer, int x, int y){
 	SDL_Texture *tex = SDL_CreateTextureFromSurface(renderer, _img);

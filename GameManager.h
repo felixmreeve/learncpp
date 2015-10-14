@@ -16,12 +16,13 @@ class GameManager
 		bool _click;
 		int _mouseX;
 		int _mouseY;
-		int _ticks;
+		const Uint8 *_keyState;
 		Player _player;
 		SDL_Window *_window;
 		SDL_Renderer *_renderer;
 	public:
 		GameManager( GC gc );
+		void checkInput();
 		void update();
 		void render();
 		void close();

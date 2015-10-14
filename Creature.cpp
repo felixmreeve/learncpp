@@ -16,7 +16,7 @@ Creature::Creature(double maxVel, double xPos, double yPos):
 	_totVel( 0 )
 {}
 
-void Creature::update(int mouseX, int mouseY, bool aim, const Uint8 *keyState)
+void Creature::update(bool aim, int mouseX, int mouseY, const Uint8 *keyState)
 {
 	if(aim == true){
 		double xDist = mouseX - _xPos;

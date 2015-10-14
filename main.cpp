@@ -18,6 +18,7 @@ int main(int argc, char *argv[]){
 	
 	//refresh loop
 	while(game.checkState()){
+		game.checkInput();
 		game.update();
 		game.render();
 		

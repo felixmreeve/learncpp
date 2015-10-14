@@ -17,7 +17,7 @@ class Creature
 		double _totVel;
 	public:
 		Creature(double maxVel, double xPos, double yPos);
-		void update(int mouseX, int mouseY, bool aim, const Uint8 *keyState);
+		void update(bool aim, int mouseX, int mouseY, const Uint8 *keyState);
 		void render(SDL_Renderer *renderer);
 		void getPos(int *x, int *y);
 };
