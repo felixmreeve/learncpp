@@ -1,5 +1,6 @@
 #include "GameManager.h"
 #include <iostream>
+#include <cstdlib>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
@@ -50,14 +51,28 @@ void GameManager::checkInput()
 void GameManager::update()
 {
 	_player.update(_click, _mouseX, _mouseY, _keyState);
-	_food.update();
+	_food.update(_player);
 }
 
 void GameManager::render()
 {
-	SDL_SetRenderDrawColor(_renderer, 255, 255, 255, 255);
+	SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255);
 	//clear the entire screen
 	SDL_RenderClear(_renderer);
+	
+	/*
+	
+	for(int i = 0; i < 500; i++)
+	{
+		int g = rand()%255;
+		int x = rand()%GC::SCREEN_WIDTH;
+		int y = rand()%GC::SCREEN_HEIGHT;
+		
+		SDL_SetRenderDrawColor(_renderer, g, g, g, 255);
+		
+		SDL_RenderDrawPoint(_renderer, x, y);
+	}
+	//*/
 	
 	_food.render(_renderer);
 	_player.render(_renderer);

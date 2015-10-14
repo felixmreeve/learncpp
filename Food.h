@@ -5,6 +5,8 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 
+#include "Player.h"
+
 class Food
 {
 	protected:
@@ -14,7 +16,7 @@ class Food
 		int _yMax;
 	public:
 		Food(int xMax, int yMax);
-		void update();
+		void update(Player player);
 		void render(SDL_Renderer *renderer);
 		void close();
 		void place();

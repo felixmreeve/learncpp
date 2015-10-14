@@ -24,6 +24,7 @@ class Player
 		void render(SDL_Renderer *renderer);
 		void close();
 		void updateHead(bool aim, int xMouse, int yMouse, const Uint8 *keyState);
+		void renderHead(SDL_Renderer *renderer);
 		void acceleration(double *xAcc, double *yAcc, int aimX, int aimY);
 		void keyStateAcceleration(double *xAcc, double *yAcc, const Uint8 *keyState);
 		double getTotVel();
