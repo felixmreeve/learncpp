@@ -7,6 +7,7 @@
 
 #include "GC.h"
 #include "Player.h"
+#include "Food.h"
 #include "Eye.h"
 
 class GameManager
@@ -18,10 +19,11 @@ class GameManager
 		int _mouseY;
 		const Uint8 *_keyState;
 		Player _player;
+		Food _food;
 		SDL_Window *_window;
 		SDL_Renderer *_renderer;
 	public:
-		GameManager( GC gc );
+		GameManager();
 		void checkInput();
 		void update();
 		void render();

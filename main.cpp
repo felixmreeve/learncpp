@@ -3,18 +3,16 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 
-#include "GameManager.h"
 #include "GC.h"
+#include "GameManager.h"
 
 int init(void);
 
 int main(int argc, char *argv[]){
 	//initialize SDL
 	init();
-	//load game constants
-	GC gc;
 	//create game manager
-	GameManager game ( gc );
+	GameManager game;
 	
 	//refresh loop
 	while(game.checkState()){

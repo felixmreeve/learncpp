@@ -6,15 +6,17 @@
 
 #include "GC.h"
 #include "Player.h"
+#include "Food.h"
 #include "Eye.h"
 
-GameManager::GameManager(GC gc) :
+GameManager::GameManager() :
 	_go( true ),
 	_click( false ),
 	_mouseX( GC::SCREEN_WIDTH/2 ),
 	_mouseY( GC::SCREEN_HEIGHT/2 ),
 	_keyState( SDL_GetKeyboardState(NULL) ),
 	_player( GC::PLAYER_SPEED, GC::PLAYER_ACCELERATION, GC::SCREEN_WIDTH/2, GC::SCREEN_HEIGHT/2 ),
+	_food( GC::SCREEN_WIDTH, GC::SCREEN_HEIGHT ),
 	_window( SDL_CreateWindow("THING", 10, 10, GC::SCREEN_WIDTH, GC::SCREEN_HEIGHT, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE) ),
 	_renderer( SDL_CreateRenderer(_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC) )
 {}
@@ -48,6 +50,7 @@ void GameManager::checkInput()
 void GameManager::update()
 {
 	_player.update(_click, _mouseX, _mouseY, _keyState);
+	_food.update();
 }
 
 void GameManager::render()
@@ -56,6 +59,7 @@ void GameManager::render()
 	//clear the entire screen
 	SDL_RenderClear(_renderer);
 	
+	_food.render(_renderer);
 	_player.render(_renderer);
 	
 	//present renderer
@@ -65,6 +69,7 @@ void GameManager::render()
 void GameManager::close()
 {
 	_player.close();
+	_food.close();
 }
 
 bool GameManager::checkState()

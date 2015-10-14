@@ -1,4 +1,4 @@
-OBJECTS = main.o GC.o GameManager.o Player.o Sprite.o Eye.o
+OBJECTS = main.o GC.o GameManager.o Player.o Food.o Sprite.o Eye.o
 COMPILER = g++
 PROGNAME = main
 OUTPUT = -o
@@ -20,6 +20,9 @@ GameManager.o: GameManager.cpp Player.cpp Eye.cpp $(HEADERS)
 
 Player.o: Player.cpp $(HEADERS)
 	$(COMPILER) $(OPTIONS) Player.cpp
+
+Food.o: Food.cpp $(HEADERS)
+	$(COMPILER) $(OPTIONS) Food.cpp
 
 Sprite.o: Sprite.cpp $(HEADERS)
 	$(COMPILER) $(OPTIONS) Sprite.cpp

@@ -14,10 +14,8 @@ Player::Player(double maxVel, double acceleration, double xPos, double yPos):
 	_xPos( xPos ),
 	_yPos( yPos ),
 	_xVel( 0 ),
-	_yVel( 0 ),
-	_sprite( "hello" )
-{
-}
+	_yVel( 0 )
+{}
 
 void Player::update(bool aim, int xMouse, int yMouse, const Uint8 *keyState)
 {	
@@ -27,20 +25,19 @@ void Player::update(bool aim, int xMouse, int yMouse, const Uint8 *keyState)
 void Player::render(SDL_Renderer *renderer)
 {
 	
-	
 	SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
 	int x;
 	int y;
-	for(x=_xPos-1; x<_xPos+2; x++)
-		for(y=_yPos-1; y<_yPos+2; y++)
+	for(x=_xPos-3; x<=_xPos+3; x++)
+		for(y=_yPos-3; y<=_yPos+3; y++)
 			SDL_RenderDrawPoint(renderer, x, y);
 	
-	_sprite.render(renderer, _xPos, _yPos);
+	//_sprite.render(renderer, _xPos, _yPos);
 }
 
 void Player::close()
 {
-	_sprite.close();
+	//_sprite.close();
 }
 
 void Player::updateHead(bool aim, int xMouse, int yMouse, const Uint8 *keyState)

@@ -17,7 +17,7 @@ class Player
 		double _xVel;
 		double _yVel;
 		
-		Sprite _sprite;
+		//Sprite _sprite;
 	public:
 		Player(double maxVel, double acceleration, double xPos, double yPos);
 		void update(bool aim, int xMouse, int yMouse, const Uint8 *keyState);
