@@ -29,10 +29,8 @@ void Food::update(Player player)
 	
 	double totDist = sqrt(xDist*xDist + yDist*yDist);
 	
-	std::cout<<totDist<<std::endl;
 	
 	if(totDist<20){
-		std::cout<<"close"<<std::endl;
 		place();
 	}
 }
@@ -56,5 +54,4 @@ void Food::place()
 {
 	_xPos = rand() % GC::SCREEN_WIDTH;
 	_yPos = rand() % GC::SCREEN_HEIGHT;
-	std::cout<<_xPos<<" "<<_yPos<<std::endl;
 }

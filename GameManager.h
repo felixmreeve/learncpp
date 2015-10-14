@@ -6,6 +6,7 @@
 #include <SDL2/SDL_ttf.h>
 
 #include "GC.h"
+#include "Background.h"
 #include "Player.h"
 #include "Food.h"
 #include "Eye.h"
@@ -20,6 +21,7 @@ class GameManager
 		const Uint8 *_keyState;
 		Player _player;
 		Food _food;
+		Background _background;
 		SDL_Window *_window;
 		SDL_Renderer *_renderer;
 	public:

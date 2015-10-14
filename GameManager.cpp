@@ -6,6 +6,7 @@
 #include <SDL2/SDL_ttf.h>
 
 #include "GC.h"
+#include "Background.h"
 #include "Player.h"
 #include "Food.h"
 #include "Eye.h"
@@ -18,6 +19,7 @@ GameManager::GameManager() :
 	_keyState( SDL_GetKeyboardState(NULL) ),
 	_player( GC::PLAYER_SPEED, GC::PLAYER_ACCELERATION, GC::SCREEN_WIDTH/2, GC::SCREEN_HEIGHT/2 ),
 	_food( GC::SCREEN_WIDTH, GC::SCREEN_HEIGHT ),
+	_background(  ),
 	_window( SDL_CreateWindow("THING", 10, 10, GC::SCREEN_WIDTH, GC::SCREEN_HEIGHT, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE) ),
 	_renderer( SDL_CreateRenderer(_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC) )
 {}
@@ -52,6 +54,7 @@ void GameManager::update()
 {
 	_player.update(_click, _mouseX, _mouseY, _keyState);
 	_food.update(_player);
+	_background.update();
 }
 
 void GameManager::render()
@@ -60,22 +63,10 @@ void GameManager::render()
 	//clear the entire screen
 	SDL_RenderClear(_renderer);
 	
-	/*
+	_background.render(_renderer);
 	
-	for(int i = 0; i < 500; i++)
-	{
-		int g = rand()%255;
-		int x = rand()%GC::SCREEN_WIDTH;
-		int y = rand()%GC::SCREEN_HEIGHT;
-		
-		SDL_SetRenderDrawColor(_renderer, g, g, g, 255);
-		
-		SDL_RenderDrawPoint(_renderer, x, y);
-	}
-	//*/
-	
-	_food.render(_renderer);
 	_player.render(_renderer);
+	_food.render(_renderer);
 	
 	//present renderer
 	SDL_RenderPresent(_renderer);
@@ -85,6 +76,7 @@ void GameManager::close()
 {
 	_player.close();
 	_food.close();
+	_background.close();
 }
 
 bool GameManager::checkState()
