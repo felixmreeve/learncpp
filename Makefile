@@ -1,9 +1,9 @@
-OBJECTS = main.o GC.o GameManager.o Background.o Player.o Food.o Sprite.o Eye.o
+OBJECTS = main.o GC.o GameManager.o Background.o Player.o Food.o Circle.o Sprite.o Eye.o
 COMPILER = g++
 PROGNAME = main
 OUTPUT = -o
 OPTIONS = -Wall -c
-HEADERS = GC.h GameManager.h Background.h Player.h Food.h Sprite.h Eye.h 
+HEADERS = GC.h GameManager.h Background.h Player.h Food.h Circle.h Sprite.h Eye.h 
 
 $(PROGNAME): $(OBJECTS)
 	$(COMPILER) $(OBJECTS) -Wall -l SDL2 -l SDL2_image -l SDL2_ttf -l m $(OUTPUT) $(PROGNAME)
@@ -26,6 +26,9 @@ Player.o: Player.cpp $(HEADERS)
 
 Food.o: Food.cpp $(HEADERS)
 	$(COMPILER) $(OPTIONS) Food.cpp
+
+Circle.o: Circle.cpp $(HEADERS)
+	$(COMPILER) $(OPTIONS) Circle.cpp
 
 Sprite.o: Sprite.cpp $(HEADERS)
 	$(COMPILER) $(OPTIONS) Sprite.cpp

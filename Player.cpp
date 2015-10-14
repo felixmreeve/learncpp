@@ -100,10 +100,7 @@ void Player::keyStateAcceleration(double *xAcc, double *yAcc, const Uint8 *keySt
 	int xAim = _xPos + xDir;
 	int yAim = _yPos + yDir;
 	
-	acceleration(xAcc, yAcc, xAim, yAim);
-	
-	//FIX SO TOTACCELERATION IS 
-	
+	acceleration(xAcc, yAcc, xAim, yAim);	
 }
 
 double Player::getTotVel()

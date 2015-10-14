@@ -58,9 +58,11 @@ void Background::drawPoint(int x, int y, int r, int g, int b)
 	 *  int y:            y position to draw pixel
 	 *  SDL_Color col:    desired colour to draw
 	 */
+	if(x>=0 && x<_surface->w && y>=0 && y<_surface->h){
 	Uint32 pixel = SDL_MapRGB(_surface->format, r, g, b);
 	Uint32 *pixels = (Uint32*)_surface->pixels;
 	pixels[x + y*_surface->w] = pixel;
+	}
 }
 
 void Background::changeColour(double *increase, double *decrease)

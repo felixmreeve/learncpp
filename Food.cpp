@@ -7,12 +7,14 @@
 
 #include "GC.h"
 #include "Player.h"
+#include "Circle.h"
 
 Food::Food(int xMax, int yMax):
 	_xPos( 0 ),
 	_yPos( 0 ),
 	_xMax( xMax ),
-	_yMax( yMax )
+	_yMax( yMax ),
+	_circle( 0, 0 )
 {
 	place();
 }
@@ -33,6 +35,7 @@ void Food::update(Player player)
 	if(totDist<20){
 		place();
 	}
+	_circle.update();
 }
 
 void Food::render(SDL_Renderer *renderer)
@@ -43,15 +46,17 @@ void Food::render(SDL_Renderer *renderer)
 	for(x=_xPos-1; x<=_xPos+1; x++)
 		for(y=_yPos-1; y<=_yPos+1; y++)
 			SDL_RenderDrawPoint(renderer, x, y);
+	_circle.render(renderer);
 }
 
 void Food::close()
 {
-	
+	_circle.close();
 }
 
 void Food::place()
 {
 	_xPos = rand() % GC::SCREEN_WIDTH;
 	_yPos = rand() % GC::SCREEN_HEIGHT;
+	_circle.place(_xPos, _yPos);
 }

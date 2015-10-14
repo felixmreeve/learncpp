@@ -9,7 +9,6 @@
 #include "Background.h"
 #include "Player.h"
 #include "Food.h"
-#include "Eye.h"
 
 GameManager::GameManager() :
 	_go( true ),

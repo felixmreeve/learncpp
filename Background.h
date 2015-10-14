@@ -13,7 +13,7 @@ class Background
 		double _g;
 		double _b;
 		int _colourAim;
-		const double _changeRate;
+		double _changeRate;
 	public:
 		Background();
 		void update();

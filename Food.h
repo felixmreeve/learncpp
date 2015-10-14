@@ -6,6 +6,7 @@
 #include <SDL2/SDL_ttf.h>
 
 #include "Player.h"
+#include "Circle.h"
 
 class Food
 {
@@ -14,6 +15,7 @@ class Food
 		int _yPos;
 		int _xMax;
 		int _yMax;
+		Circle _circle;
 	public:
 		Food(int xMax, int yMax);
 		void update(Player player);

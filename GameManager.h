@@ -5,11 +5,9 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 
-#include "GC.h"
 #include "Background.h"
 #include "Player.h"
 #include "Food.h"
-#include "Eye.h"
 
 class GameManager
 {
