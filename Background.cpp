@@ -13,13 +13,15 @@ Background::Background():
 	_g( 0 ),
 	_b( 0 ),
 	_colourAim( RED ),
-	_changeRate( 0.3 ),
+	_changeRate( 1 ),
 	_jumpRatio( 0.3 )
 {}
 
 void Background::update(int jump)
 {
-	for(int i=0; i< jump; i++){
+	//NEED TO CHANGE SO IT WORKS WHEN JUMP == 0
+	if(jump != 0) jump *= _jumpRatio;
+	do{
 		if(_r >= 255){
 			_r = 255;
 			_colourAim = GREEN;
@@ -48,7 +50,8 @@ void Background::update(int jump)
 				changeColour(&_b, &_g);
 				break;
 		}
-	}
+		jump--;
+	}while(jump>0);
 	Uint32 color = SDL_MapRGB(_surface->format, round(_r), round(_g), round(_b));
 	
 	SDL_FillRect(_surface, NULL, color);

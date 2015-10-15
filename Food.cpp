@@ -21,7 +21,7 @@ Food::Food(int xMax, int yMax):
 
 int Food::update(Player player)
 {
-	int size = 0;
+	int size = 1;
 	int xPlayerPos = 0;
 	int yPlayerPos = 0;
 	
