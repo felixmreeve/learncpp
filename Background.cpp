@@ -13,13 +13,12 @@ Background::Background():
 	_g( 0 ),
 	_b( 0 ),
 	_colourAim( RED ),
-	_changeRate( 1 ),
-	_jumpRatio( 0.3 )
+	_changeRate( 0.7 ),
+	_jumpRatio( 1 )
 {}
 
 void Background::update(int jump)
 {
-	//NEED TO CHANGE SO IT WORKS WHEN JUMP == 0
 	if(jump != 0) jump *= _jumpRatio;
 	do{
 		if(_r >= 255){

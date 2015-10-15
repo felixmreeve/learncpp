@@ -1,6 +1,7 @@
 #ifndef _GAMEMANAGER_H_
 #define _GAMEMANAGER_H_
 
+#include <vector>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
@@ -8,6 +9,7 @@
 #include "Background.h"
 #include "Player.h"
 #include "Food.h"
+#include "Circle.h"
 
 class GameManager
 {
@@ -19,6 +21,7 @@ class GameManager
 		const Uint8 *_keyState;
 		Player _player;
 		Food _food;
+		std::vector<Circle> _circles;
 		Background _background;
 		SDL_Window *_window;
 		SDL_Renderer *_renderer;

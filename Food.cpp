@@ -14,16 +14,18 @@ Food::Food(int xMax, int yMax):
 	_yPos( 0 ),
 	_xMax( xMax ),
 	_yMax( yMax ),
-	_circle( 0, 0 )
+	_age( 0 )
 {
 	place();
 }
 
 int Food::update(Player player)
 {
-	int size = 1;
+	int isEaten = 0;
 	int xPlayerPos = 0;
 	int yPlayerPos = 0;
+	
+	_age++;
 	
 	player.getPos(&xPlayerPos, &yPlayerPos);
 	
@@ -32,12 +34,11 @@ int Food::update(Player player)
 	
 	double totDist = sqrt(xDist*xDist + yDist*yDist);
 	
-	
 	if(totDist<20){
-		size = place();
+		isEaten = _age;
+		eaten();
 	}
-	_circle.update();
-	return size;
+	return isEaten;
 }
 
 void Food::render(SDL_Renderer *renderer)
@@ -48,17 +49,26 @@ void Food::render(SDL_Renderer *renderer)
 	for(x=_xPos-1; x<=_xPos+1; x++)
 		for(y=_yPos-1; y<=_yPos+1; y++)
 			SDL_RenderDrawPoint(renderer, x, y);
-	_circle.render(renderer);
 }
 
 void Food::close()
 {
-	_circle.close();
+	
 }
 
-int Food::place()
+void Food::place()
 {
 	_xPos = rand() % GC::SCREEN_WIDTH;
 	_yPos = rand() % GC::SCREEN_HEIGHT;
-	return _circle.place(_xPos, _yPos);
+	_age = 0;
+}
+
+void Food::eaten()
+{
+	place();
+}
+
+int Food::getAge()
+{
+	return _age;
 }

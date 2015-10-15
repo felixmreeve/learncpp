@@ -1,6 +1,7 @@
 #include "GameManager.h"
 #include <iostream>
 #include <cstdlib>
+#include <vector>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
@@ -9,6 +10,7 @@
 #include "Background.h"
 #include "Player.h"
 #include "Food.h"
+#include "Circle.h"
 
 GameManager::GameManager() :
 	_go( true ),
@@ -18,10 +20,14 @@ GameManager::GameManager() :
 	_keyState( SDL_GetKeyboardState(NULL) ),
 	_player( GC::PLAYER_SPEED, GC::PLAYER_ACCELERATION, GC::SCREEN_WIDTH/2, GC::SCREEN_HEIGHT/2 ),
 	_food( GC::SCREEN_WIDTH, GC::SCREEN_HEIGHT ),
+	_circles(  ),
 	_background(  ),
 	_window( SDL_CreateWindow("THING", 10, 10, GC::SCREEN_WIDTH, GC::SCREEN_HEIGHT, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE) ),
 	_renderer( SDL_CreateRenderer(_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC) )
-{}
+{
+	Circle circle(GC::SCREEN_WIDTH/2, GC::SCREEN_HEIGHT/2);
+	_circles.push_back(circle);
+}
 
 
 
@@ -78,9 +84,21 @@ void GameManager::checkInput()
 
 void GameManager::update()
 {
+	static int count = 0;
 	_player.update(_click, _mouseX, _mouseY, _keyState);
-	int size = _food.update(_player);
-	_background.update(size);
+	int jump = _food.update(_player);
+	_background.update(jump);
+	//iterate through circles vector
+	for(std::vector<Circle>::iterator it = _circles.begin(); it!= _circles.end(); ++it){
+		it->update();
+	}
+	if(count % 100 == 0){
+		int x = 0;
+		int y = 0;
+		_player.getPos(&x, &y);
+		Circle circle(x, y);
+		_circles.push_back(circle);
+	}
 }
 
 void GameManager::render()
@@ -93,6 +111,10 @@ void GameManager::render()
 	
 	_player.render(_renderer);
 	_food.render(_renderer);
+	
+	for(std::vector<Circle>::iterator it = _circles.begin(); it!= _circles.end(); ++it){
+		it->render(_renderer);
+	}
 	
 	//present renderer
 	SDL_RenderPresent(_renderer);

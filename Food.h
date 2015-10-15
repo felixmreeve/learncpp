@@ -1,7 +1,6 @@
 #ifndef _FOOD_H_
 #define _FOOD_H_
 
-#include <vector>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
@@ -16,13 +15,14 @@ class Food
 		int _yPos;
 		int _xMax;
 		int _yMax;
-		Circle _circle;
+		int _age;
 	public:
 		Food(int xMax, int yMax);
 		int update(Player player);
 		void render(SDL_Renderer *renderer);
 		void close();
-		int place();
+		void place();
 		void eaten();
+		int getAge();
 };
 #endif
