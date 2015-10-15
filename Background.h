@@ -14,9 +14,10 @@ class Background
 		double _b;
 		int _colourAim;
 		double _changeRate;
+		double _jumpRatio;
 	public:
 		Background();
-		void update();
+		void update(int jump);
 		void render(SDL_Renderer *renderer);
 		void close();
 		void drawPoint(int x, int y, int r, int g, int b);

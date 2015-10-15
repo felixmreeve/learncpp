@@ -8,7 +8,7 @@
 class Circle
 {
 	protected:
-		int _radius;
+		double _radius;
 		int _xPos;
 		int _yPos;
 		double _increaseRate;
@@ -17,7 +17,7 @@ class Circle
 		void update();
 		void render(SDL_Renderer *renderer);
 		void close();
-		void place(int x, int y);
+		int place(int x, int y);
 };
 
 #endif

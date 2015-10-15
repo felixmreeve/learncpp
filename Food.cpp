@@ -19,8 +19,9 @@ Food::Food(int xMax, int yMax):
 	place();
 }
 
-void Food::update(Player player)
+int Food::update(Player player)
 {
+	int size = 0;
 	int xPlayerPos = 0;
 	int yPlayerPos = 0;
 	
@@ -33,9 +34,10 @@ void Food::update(Player player)
 	
 	
 	if(totDist<20){
-		place();
+		size = place();
 	}
 	_circle.update();
+	return size;
 }
 
 void Food::render(SDL_Renderer *renderer)
@@ -54,9 +56,9 @@ void Food::close()
 	_circle.close();
 }
 
-void Food::place()
+int Food::place()
 {
 	_xPos = rand() % GC::SCREEN_WIDTH;
 	_yPos = rand() % GC::SCREEN_HEIGHT;
-	_circle.place(_xPos, _yPos);
+	return _circle.place(_xPos, _yPos);
 }

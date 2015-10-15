@@ -10,12 +10,12 @@ Circle::Circle(int xPos, int yPos):
 	_radius( 1 ),
 	_xPos( xPos ),
 	_yPos( yPos ),
-	_increaseRate( 1 )
-{printf("%d\n%d\n", _xPos, _yPos);}
+	_increaseRate( 2 )
+{}
 
 void Circle::update()
 {
-	_radius += 1;
+	_radius += _increaseRate;
 }
 
 void Circle::render(SDL_Renderer *renderer)
@@ -69,9 +69,11 @@ void Circle::close()
 
 int Circle::place(int x, int y)
 {
+	int size = _radius;
 	_radius = 1;
 	_xPos = x;
 	_yPos = y;
+	return size;
 }
 /*
 void Icircle(SDL_Surface *img,int _xPos,int _yPos,int radius,RGBcolour col)

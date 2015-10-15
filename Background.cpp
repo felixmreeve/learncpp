@@ -13,25 +13,41 @@ Background::Background():
 	_g( 0 ),
 	_b( 0 ),
 	_colourAim( RED ),
-	_changeRate( 0.1 )
+	_changeRate( 0.3 ),
+	_jumpRatio( 0.3 )
 {}
 
-void Background::update()
+void Background::update(int jump)
 {
-	if(_r>=255) _colourAim = GREEN;
-	if(_g>=255) _colourAim = BLUE;
-	if(_b>=255) _colourAim = RED;
-	
-	switch(_colourAim){
-		case RED:
-			changeColour(&_r, &_b);
-			break;
-		case GREEN:
-			changeColour(&_g, &_r);
-			break;
-		case BLUE:
-			changeColour(&_b, &_g);
-			break;
+	for(int i=0; i< jump; i++){
+		if(_r >= 255){
+			_r = 255;
+			_colourAim = GREEN;
+		}
+		if(_g >= 255){
+			_g = 255;
+			_colourAim = BLUE;
+		}
+		if(_b >= 255){
+			_b = 255;
+			_colourAim = RED;
+		}
+		
+		if(_r < 0) _r = 0;
+		if(_g < 0) _g = 0;
+		if(_b < 0) _b = 0;
+		
+		switch(_colourAim){
+			case RED:
+				changeColour(&_r, &_b);
+				break;
+			case GREEN:
+				changeColour(&_g, &_r);
+				break;
+			case BLUE:
+				changeColour(&_b, &_g);
+				break;
+		}
 	}
 	Uint32 color = SDL_MapRGB(_surface->format, round(_r), round(_g), round(_b));
 	
@@ -67,6 +83,8 @@ void Background::drawPoint(int x, int y, int r, int g, int b)
 
 void Background::changeColour(double *increase, double *decrease)
 {
-	(*increase) += _changeRate;
-	(*decrease) -= _changeRate;
+
+	*increase += _changeRate;
+	*decrease -= _changeRate;
+
 }

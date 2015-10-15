@@ -18,10 +18,10 @@ class Food
 		Circle _circle;
 	public:
 		Food(int xMax, int yMax);
-		void update(Player player);
+		int update(Player player);
 		void render(SDL_Renderer *renderer);
 		void close();
-		void place();
+		int place();
 		void eaten();
 };
 #endif

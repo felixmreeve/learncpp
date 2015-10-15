@@ -23,6 +23,33 @@ GameManager::GameManager() :
 	_renderer( SDL_CreateRenderer(_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC) )
 {}
 
+
+
+
+
+//
+//
+//
+//
+
+
+
+
+
+//DO YOU WANT VSYNC?
+
+
+
+
+
+
+
+//
+//
+//
+//
+
+
 void GameManager::checkInput()
 {
 	SDL_Event incomingEvent;
@@ -52,8 +79,8 @@ void GameManager::checkInput()
 void GameManager::update()
 {
 	_player.update(_click, _mouseX, _mouseY, _keyState);
-	_food.update(_player);
-	_background.update();
+	int size = _food.update(_player);
+	_background.update(size);
 }
 
 void GameManager::render()
