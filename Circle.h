@@ -18,6 +18,7 @@ class Circle
 		void render(SDL_Renderer *renderer);
 		void close();
 		int place(int x, int y);
+		int getRadius();
 };
 
 #endif

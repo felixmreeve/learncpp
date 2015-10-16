@@ -84,21 +84,19 @@ void GameManager::checkInput()
 
 void GameManager::update()
 {
-	static int count = 0;
 	_player.update(_click, _mouseX, _mouseY, _keyState);
 	int jump = _food.update(_player);
 	_background.update(jump);
-	//iterate through circles vector
-	for(std::vector<Circle>::iterator it = _circles.begin(); it!= _circles.end(); ++it){
-		it->update();
-	}
-	if(count % 100 == 0){
+	
+	if(jump){
 		int x = 0;
 		int y = 0;
-		_player.getPos(&x, &y);
-		Circle circle(x, y);
-		_circles.push_back(circle);
+		_food.getPos(&x, &y);
+		addCircle(x, y);
 	}
+	
+	updateCircles();
+	
 }
 
 void GameManager::render()
@@ -131,4 +129,29 @@ bool GameManager::checkState()
 {
 	//return whether game is running
 	return _go;
+}
+
+void GameManager::updateCircles()
+{
+	//iterate through circles vector
+	for(std::vector<Circle>::iterator it = _circles.begin(); it!= _circles.end(); ++it){
+		int radius = 0;
+		it->update();
+		radius = it->getRadius();
+		if(radius > 255){
+			_circles.erase(it);
+		}
+	}
+	/*
+	int x = 0;
+	int y = 0;
+	_player.getPos(&x, &y);
+	addCircle(x, y);
+	*/
+}
+
+void GameManager::addCircle(int x, int y)
+{
+	Circle circle(x, y);
+	_circles.push_back(circle);
 }

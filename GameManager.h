@@ -32,5 +32,7 @@ class GameManager
 		void render();
 		void close();
 		bool checkState();
+		void updateCircles();
+		void addCircle(int x, int y);
 };
 #endif

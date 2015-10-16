@@ -68,6 +68,12 @@ void Food::eaten()
 	place();
 }
 
+void Food::getPos(int *x, int *y)
+{
+	*x = _xPos;
+	*y = _yPos;
+}
+
 int Food::getAge()
 {
 	return _age;

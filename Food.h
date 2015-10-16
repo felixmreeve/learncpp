@@ -23,6 +23,7 @@ class Food
 		void close();
 		void place();
 		void eaten();
+		void getPos(int *x, int *y);
 		int getAge();
 };
 #endif
