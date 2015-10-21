@@ -13,8 +13,8 @@ Background::Background():
 	_g( 0 ),
 	_b( 0 ),
 	_colourAim( RED ),
-	_changeRate( 0.7 ),
-	_jumpRatio( 1 )
+	_changeRate( GC::BACKGROUND_CHANGE_RATE ),
+	_jumpRatio( GC::BACKGROUND_JUMP_RATIO )
 {}
 
 void Background::update(int jump)

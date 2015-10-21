@@ -1,33 +1,33 @@
 #ifndef _PLAYER_H_
 #define _PLAYER_H_
 
+#include <vector>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 
 #include "Sprite.h"
+#include "Head.h"
+#include "BodyPart.h"
+#include "Food.h"
 
 class Player
 {
 	protected:
-		double _maxVel;
-		double _acceleration;
-		double _xPos;
-		double _yPos;
-		double _xVel;
-		double _yVel;
+		Head _head;
 		
+		std::vector<BodyPart> _bodyParts;
 		//Sprite _sprite;
 	public:
 		Player(double maxVel, double acceleration, double xPos, double yPos);
-		void update(bool aim, int xMouse, int yMouse, const Uint8 *keyState);
+		void update(bool aim, int xMouse, int yMouse, const Uint8 *keyState, Food *food);
 		void render(SDL_Renderer *renderer);
 		void close();
-		void updateHead(bool aim, int xMouse, int yMouse, const Uint8 *keyState);
-		void renderHead(SDL_Renderer *renderer);
-		void acceleration(double *xAcc, double *yAcc, int aimX, int aimY);
-		void keyStateAcceleration(double *xAcc, double *yAcc, const Uint8 *keyState);
-		double getTotVel();
-		void getPos(int *x, int *y);
+		
+		void updateBody(int xHead, int yHead);
+		void renderBody(SDL_Renderer *renderer);
+		bool checkFood(Food *food);
+		double getHeadVel();
+		void getHeadPos(double *x, double *y);
 };
 #endif

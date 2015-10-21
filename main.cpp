@@ -1,4 +1,5 @@
 #include <iostream>
+#include <unistd.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
@@ -16,11 +17,29 @@ int main(int argc, char *argv[]){
 	
 	//refresh loop
 	while(game.checkState()){
+		//int start = SDL_GetTicks();
+		
 		game.checkInput();
 		game.update();
 		game.render();
 		
-		SDL_Delay(10);
+		
+		
+		
+		
+		
+		
+		
+		
+		//if(timeElapsed < GC::TIME_FOR_FRAME){
+			
+			//usleep(10000);
+			SDL_Delay(10);
+		//}
+		//int end = SDL_GetTicks();
+		//int timeElapsed = end - start;
+		//printf("timeElapsed = %d\n", timeElapsed);
+		//printf("fps: %f\n\n", 1000.0f/timeElapsed);
 	}
 	game.close();
 	//quit SDL

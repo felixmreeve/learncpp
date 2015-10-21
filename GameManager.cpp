@@ -25,8 +25,10 @@ GameManager::GameManager() :
 	_window( SDL_CreateWindow("THING", 10, 10, GC::SCREEN_WIDTH, GC::SCREEN_HEIGHT, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE) ),
 	_renderer( SDL_CreateRenderer(_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC) )
 {
-	Circle circle(GC::SCREEN_WIDTH/2, GC::SCREEN_HEIGHT/2);
-	_circles.push_back(circle);
+	int x = 0;
+	int y = 0;
+	_food.getPos(&x, &y);
+	addCircle(x, y, GC::FOOD_CIRCLE_SPEED, GC::FOOD_CIRCLE_START_SIZE, GC::FOOD_CIRCLE_MAX_SIZE);
 }
 
 
@@ -84,17 +86,16 @@ void GameManager::checkInput()
 
 void GameManager::update()
 {
-	_player.update(_click, _mouseX, _mouseY, _keyState);
-	int jump = _food.update(_player);
+	_player.update(_click, _mouseX, _mouseY, _keyState, &_food);
+	int jump = _food.update();
 	_background.update(jump);
 	
 	if(jump){
 		int x = 0;
 		int y = 0;
 		_food.getPos(&x, &y);
-		addCircle(x, y);
+		addCircle(x, y, GC::FOOD_CIRCLE_SPEED, GC::FOOD_CIRCLE_START_SIZE, GC::FOOD_CIRCLE_MAX_SIZE);
 	}
-	
 	updateCircles();
 	
 }
@@ -109,11 +110,12 @@ void GameManager::render()
 	
 	_player.render(_renderer);
 	_food.render(_renderer);
-	
-	for(std::vector<Circle>::iterator it = _circles.begin(); it!= _circles.end(); ++it){
-		it->render(_renderer);
+	if(!_circles.empty()){
+		for(std::vector<Circle>::iterator it = _circles.begin(); it < _circles.end(); ++it){
+			//if(_circles.size() == 0) {printf("empty\n"); break;}
+			it->render(_renderer);
+		}
 	}
-	
 	//present renderer
 	SDL_RenderPresent(_renderer);
 }
@@ -123,6 +125,7 @@ void GameManager::close()
 	_player.close();
 	_food.close();
 	_background.close();
+	_circles.clear();
 }
 
 bool GameManager::checkState()
@@ -133,25 +136,50 @@ bool GameManager::checkState()
 
 void GameManager::updateCircles()
 {
+	
+	double x = 0;
+	double y = 0;
+	_player.getHeadPos(&x, &y);
+	
+	double maxRad = GC::PLAYER_CIRCLE_MAX_SIZE * _player.getHeadVel() / GC::PLAYER_SPEED;
+	
+	
+	/*if(maxRad < GC::PLAYER_CIRCLE_MIN_SIZE){
+		maxRad = GC::PLAYER_CIRCLE_MIN_SIZE;
+	}
+	//*/
+	
+	
+	
+	
+	addCircle(x, y, GC::PLAYER_CIRCLE_SPEED, GC::PLAYER_CIRCLE_START_SIZE, maxRad);
+	
+	
+	
+	
+	
+	
+	//addCircle(x, y, GC::PLAYER_CIRCLE_SPEED, GC::PLAYER_CIRCLE_START_SIZE, GC::PLAYER_CIRCLE_MAX_SIZE);
+	
 	//iterate through circles vector
-	for(std::vector<Circle>::iterator it = _circles.begin(); it!= _circles.end(); ++it){
-		int radius = 0;
+	//janky code tho
+	for(std::vector<Circle>::iterator it = _circles.begin(); it < _circles.end(); ++it){
+		//if(_circles.size() == 0) {printf("empty\n"); break;}
+		double radius = 0;
+		double maxRadius = 0;
 		it->update();
 		radius = it->getRadius();
-		if(radius > 255){
+		maxRadius = it->getMaxRadius();
+		if(radius > maxRadius){
 			_circles.erase(it);
 		}
 	}
-	/*
-	int x = 0;
-	int y = 0;
-	_player.getPos(&x, &y);
-	addCircle(x, y);
-	*/
+	
+	
 }
 
-void GameManager::addCircle(int x, int y)
+void GameManager::addCircle(int x, int y, double increaseRate, double radius, double maxRadius)
 {
-	Circle circle(x, y);
+	Circle circle(x, y, increaseRate, radius,  maxRadius);
 	_circles.push_back(circle);
 }

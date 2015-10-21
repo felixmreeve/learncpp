@@ -6,37 +6,32 @@
 #include <SDL2/SDL_ttf.h>
 
 #include "GC.h"
-#include "Player.h"
 #include "Circle.h"
 
 Food::Food(int xMax, int yMax):
 	_xPos( 0 ),
 	_yPos( 0 ),
+	_xPrevPos( 0 ),
+	_yPrevPos( 0 ),
+	_xMin( 0 ),
+	_yMin( 0 ),
 	_xMax( xMax ),
 	_yMax( yMax ),
+	_gone( false ),
 	_age( 0 )
 {
 	place();
 }
 
-int Food::update(Player player)
+int Food::update()
 {
 	int isEaten = 0;
-	int xPlayerPos = 0;
-	int yPlayerPos = 0;
-	
 	_age++;
 	
-	player.getPos(&xPlayerPos, &yPlayerPos);
-	
-	int xDist = xPlayerPos - _xPos;
-	int yDist = yPlayerPos - _yPos;
-	
-	double totDist = sqrt(xDist*xDist + yDist*yDist);
-	
-	if(totDist<20){
+	if(_gone){
 		isEaten = _age;
-		eaten();
+		place();
+		_gone = false;
 	}
 	return isEaten;
 }
@@ -58,14 +53,16 @@ void Food::close()
 
 void Food::place()
 {
-	_xPos = rand() % GC::SCREEN_WIDTH;
-	_yPos = rand() % GC::SCREEN_HEIGHT;
+	_xPrevPos = _xPos;
+	_yPrevPos = _yPos;
+	_xPos = _xMin + rand() % (_xMax - _xMin);
+	_yPos = _yMin + rand() % (_yMax - _yMin);
 	_age = 0;
 }
 
 void Food::eaten()
 {
-	place();
+	_gone = true;
 }
 
 void Food::getPos(int *x, int *y)
@@ -74,6 +71,11 @@ void Food::getPos(int *x, int *y)
 	*y = _yPos;
 }
 
+void Food::getPrevPos(int *x, int *y)
+{
+	*x = _xPrevPos;
+	*y = _yPrevPos;
+}
 int Food::getAge()
 {
 	return _age;

@@ -12,13 +12,14 @@ class Circle
 		int _xPos;
 		int _yPos;
 		double _increaseRate;
+		double _maxRadius;
 	public:
-		Circle(int xPos, int yPos);
+		Circle(int xPos, int yPos, double increaseRate, double radius, double maxRadius);
 		void update();
 		void render(SDL_Renderer *renderer);
 		void close();
-		int place(int x, int y);
 		int getRadius();
+		int getMaxRadius();
 };
 
 #endif

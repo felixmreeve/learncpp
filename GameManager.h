@@ -6,6 +6,7 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 
+#include "GC.h"
 #include "Background.h"
 #include "Player.h"
 #include "Food.h"
@@ -33,6 +34,6 @@ class GameManager
 		void close();
 		bool checkState();
 		void updateCircles();
-		void addCircle(int x, int y);
+		void addCircle(int x, int y, double increaseRate, double radius, double maxRadius);
 };
 #endif
