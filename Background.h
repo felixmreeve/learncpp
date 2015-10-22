@@ -9,19 +9,19 @@ class Background
 {
 	protected:
 		SDL_Surface *_surface;
-		double _r;
-		double _g;
-		double _b;
+		float _r;
+		float _g;
+		float _b;
 		int _colourAim;
-		double _changeRate;
-		double _jumpRatio;
+		float _changeRate;
+		float _jumpRatio;
 	public:
 		Background();
 		void update(int jump);
 		void render(SDL_Renderer *renderer);
 		void close();
 		void drawPoint(int x, int y, int r, int g, int b);
-		void changeColour(double *increase, double *decrease);
+		void changeColour(float *increase, float *decrease);
 
 };
 

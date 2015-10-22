@@ -1,21 +1,22 @@
 #include "Circle.h"
-#include <iostream>
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_ttf.h>
 
-#include "GC.h"
-
-Circle::Circle(int xPos, int yPos, double increaseRate, double radius, double maxRadius):
+Circle::Circle(int xPos, int yPos, float increaseRate, float radius, float maxRadius):
+	Renderable(xPos, yPos),
 	_radius( radius ),
-	_xPos( xPos ),
-	_yPos( yPos ),
 	_increaseRate( increaseRate ),
 	_maxRadius( maxRadius )
 {}
 
 void Circle::update()
-{
+{	
+	int xCheck = _xPos;
+	int yCheck = _yPos;
+	bool change = checkPos(&xCheck, &yCheck);
+	if(change){
+		_xPos = xCheck;
+		_yPos = yCheck;
+	}
+	
 	_radius += _increaseRate;
 }
 
@@ -33,28 +34,28 @@ void Circle::render(SDL_Renderer *renderer)
 		while(x>=y)
 		{
 			if((x+_xPos)>=0 && (x+_xPos)<GC::SCREEN_WIDTH && (y+_yPos)>=0 && (y+_yPos)<GC::SCREEN_HEIGHT)
-				SDL_RenderDrawPoint(renderer, x+_xPos, y+_yPos);
+				renderPoint(renderer, x+_xPos, y+_yPos);
 				
 			if((y+_xPos)>=0 && (y+_xPos)<GC::SCREEN_WIDTH && (x+_yPos)>=0 && (x+_yPos)<GC::SCREEN_HEIGHT)
-				SDL_RenderDrawPoint(renderer, y+_xPos, x+_yPos);
+				renderPoint(renderer, y+_xPos, x+_yPos);
 			
 			if((-x+_xPos)>=0 && (-x+_xPos)<GC::SCREEN_WIDTH && (y+_yPos)>=0 && (y+_yPos)<GC::SCREEN_HEIGHT)
-				SDL_RenderDrawPoint(renderer, -x+_xPos, y+_yPos);
+				renderPoint(renderer, -x+_xPos, y+_yPos);
 				
 			if((-y+_xPos)>=0 && (-y+_xPos)<GC::SCREEN_WIDTH && (x+_yPos)>=0 && (x+_yPos)<GC::SCREEN_HEIGHT)
-				SDL_RenderDrawPoint(renderer, -y+_xPos, x+_yPos);
+				renderPoint(renderer, -y+_xPos, x+_yPos);
 				
 			if((-x+_xPos)>=0 && (-x+_xPos)<GC::SCREEN_WIDTH && (-y+_yPos)>=0 && (-y+_yPos)<GC::SCREEN_HEIGHT)
-				SDL_RenderDrawPoint(renderer, -x+_xPos, -y+_yPos);
+				renderPoint(renderer, -x+_xPos, -y+_yPos);
 				
 			if((-y+_xPos)>=0 && (-y+_xPos)<GC::SCREEN_WIDTH && (-x+_yPos)>=0 && (-x+_yPos)<GC::SCREEN_HEIGHT)
-				SDL_RenderDrawPoint(renderer, -y+_xPos, -x+_yPos);
+				renderPoint(renderer, -y+_xPos, -x+_yPos);
 				
 			if((x+_xPos)>=0 && (x+_xPos)<GC::SCREEN_WIDTH && (-y+_yPos)>=0 && (-y+_yPos)<GC::SCREEN_HEIGHT)
-				SDL_RenderDrawPoint(renderer, x+_xPos, -y+_yPos);
+				renderPoint(renderer, x+_xPos, -y+_yPos);
 				
 			if((y+_xPos)>=0 && (y+_xPos)<GC::SCREEN_WIDTH && (-x+_yPos)>=0 && (-x+_yPos)<GC::SCREEN_HEIGHT)
-				SDL_RenderDrawPoint(renderer, y+_xPos, -x+_yPos);
+				renderPoint(renderer, y+_xPos, -x+_yPos);
 				
 			y++;
 			if(error < 0)

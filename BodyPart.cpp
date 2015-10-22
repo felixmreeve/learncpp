@@ -1,16 +1,10 @@
 #include "BodyPart.h"
-#include <iostream>
-#include <math.h>
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_ttf.h>
 
-BodyPart::BodyPart(double xPos, double yPos):
-	_xPos( xPos ),
-	_yPos( yPos )
+BodyPart::BodyPart(float xPos, float yPos):
+	Renderable( xPos, yPos )
 {}
 
-void BodyPart::update(double xPos, double yPos)
+void BodyPart::update(float xPos, float yPos)
 {
 	_xPos = xPos;
 	_yPos = yPos;
@@ -23,11 +17,6 @@ void BodyPart::render(SDL_Renderer *renderer)
 	int y;
 	for(x=_xPos-2; x<=_xPos+2; x++)
 		for(y=_yPos-2; y<=_yPos+2; y++)
-			SDL_RenderDrawPoint(renderer, x, y);
+			renderPoint(renderer, x, y);
 }
 
-void BodyPart::getPos(int *x, int *y)
-{
-	*x = _xPos;
-	*y = _yPos;
-}

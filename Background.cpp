@@ -83,7 +83,7 @@ void Background::drawPoint(int x, int y, int r, int g, int b)
 	}
 }
 
-void Background::changeColour(double *increase, double *decrease)
+void Background::changeColour(float *increase, float *decrease)
 {
 
 	*increase += _changeRate;

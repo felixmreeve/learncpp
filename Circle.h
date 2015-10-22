@@ -1,20 +1,22 @@
 #ifndef _CIRCLE_H_
 #define _CIRCLE_H_
 
+#include <iostream>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 
-class Circle
+#include "GC.h"
+#include "Renderable.h"
+
+class Circle: public Renderable
 {
 	protected:
-		double _radius;
-		int _xPos;
-		int _yPos;
-		double _increaseRate;
-		double _maxRadius;
+		float _radius;
+		float _increaseRate;
+		float _maxRadius;
 	public:
-		Circle(int xPos, int yPos, double increaseRate, double radius, double maxRadius);
+		Circle(int xPos, int yPos, float increaseRate, float radius, float maxRadius);
 		void update();
 		void render(SDL_Renderer *renderer);
 		void close();

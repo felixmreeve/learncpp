@@ -6,7 +6,7 @@
 
 #include <math.h>
 
-Eye::Eye(double xPos, double yPos):
+Eye::Eye(float xPos, float yPos):
 	_xPos( xPos ),
 	_yPos( yPos ),
 	_xCenter( xPos ),
@@ -15,9 +15,9 @@ Eye::Eye(double xPos, double yPos):
 
 void Eye::update(int xAim, int yAim)
 {
-	double xDist = xAim - _xCenter;
-	double yDist = yAim - _yCenter;
-	double totDist = sqrt(xDist*xDist + yDist*yDist);
+	float xDist = xAim - _xCenter;
+	float yDist = yAim - _yCenter;
+	float totDist = sqrt(xDist*xDist + yDist*yDist);
 	xDist = (50.0f*xDist)/totDist;
 	yDist = (50.0f*yDist)/totDist;
 	_xPos = _xCenter + xDist;

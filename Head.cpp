@@ -1,15 +1,9 @@
 #include "Head.h"
-#include <iostream>
-#include <math.h>
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_ttf.h>
 
-Head::Head(double maxVel, double acceleration, double xPos, double yPos):
+Head::Head(float maxVel, float acceleration, float xPos, float yPos):
+	Renderable( xPos, yPos ),
 	_maxVel( maxVel ),
 	_acceleration( acceleration ),
-	_xPos( xPos ),
-	_yPos( yPos ),
 	_xVel( 0 ),
 	_yVel( 0 )
 {}
@@ -17,8 +11,8 @@ Head::Head(double maxVel, double acceleration, double xPos, double yPos):
 void Head::update(bool aim, int xMouse, int yMouse, const Uint8 *keyState)
 {
 	// calculate accleration vector
-	double xAcc = 0;
-	double yAcc = 0;
+	float xAcc = 0;
+	float yAcc = 0;
 	
 	if(aim == true){
 		acceleration(&xAcc, &yAcc, xMouse, yMouse);
@@ -31,7 +25,7 @@ void Head::update(bool aim, int xMouse, int yMouse, const Uint8 *keyState)
 	_yVel += yAcc;
 	
 	//lock total velocity
-	double totVel = sqrt(_xVel*_xVel + _yVel*_yVel);
+	float totVel = sqrt(_xVel*_xVel + _yVel*_yVel);
 	if(totVel > _maxVel){
 		_xVel = (_maxVel * _xVel) / totVel;
 		_yVel = (_maxVel * _yVel) / totVel;
@@ -40,6 +34,16 @@ void Head::update(bool aim, int xMouse, int yMouse, const Uint8 *keyState)
 	//update position
 	_xPos += _xVel;
 	_yPos += _yVel;
+	
+	if(!aim){
+		int xCheck = _xPos;
+		int yCheck = _yPos;
+		bool change = checkPos(&xCheck, &yCheck);
+		if(change){
+			_xPos = xCheck;
+			_yPos = yCheck;
+		}
+	}
 }
 
 void Head::render(SDL_Renderer *renderer)
@@ -49,25 +53,25 @@ void Head::render(SDL_Renderer *renderer)
 	int y;
 	for(x=_xPos-3; x<=_xPos+3; x++)
 		for(y=_yPos-3; y<=_yPos+3; y++)
-			SDL_RenderDrawPoint(renderer, x, y);
+			renderPoint(renderer, x, y);
 	
 	//_sprite.render(renderer, _xPos, _yPos);
 }
 
-void Head::acceleration(double *xAcc, double *yAcc, int xAim, int yAim)
+void Head::acceleration(float *xAcc, float *yAcc, int xAim, int yAim)
 {
 	float xDist = xAim - _xPos;
 	float yDist = yAim - _yPos;
 	
 	if(abs(xDist) >= 1 || abs(yDist) >= 1)
 	{
-		double totDist = sqrt(xDist*xDist + yDist*yDist);
+		float totDist = sqrt(xDist*xDist + yDist*yDist);
 		*xAcc += (_acceleration * xDist) / totDist;
 		*yAcc += (_acceleration * yDist) / totDist;
 	}
 }
 
-void Head::keyStateAcceleration(double *xAcc, double *yAcc, const Uint8 *keyState)
+void Head::keyStateAcceleration(float *xAcc, float *yAcc, const Uint8 *keyState)
 {
 	int xDir = 0;
 	int yDir = 0;
@@ -84,13 +88,7 @@ void Head::keyStateAcceleration(double *xAcc, double *yAcc, const Uint8 *keyStat
 	acceleration(xAcc, yAcc, xAim, yAim);	
 }
 
-double Head::getTotVel()
+float Head::getTotVel()
 {
 	return sqrt(_xVel*_xVel + _yVel*_yVel);
-}
-
-void Head::getPos(double *x, double *y)
-{
-	*x = _xPos;
-	*y = _yPos;
 }

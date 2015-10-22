@@ -1,16 +1,7 @@
 #include "Food.h"
-#include <iostream>
-#include <cstdlib>
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_ttf.h>
-
-#include "GC.h"
-#include "Circle.h"
 
 Food::Food(int xMax, int yMax):
-	_xPos( 0 ),
-	_yPos( 0 ),
+	Renderable( 0, 0 ),
 	_xPrevPos( 0 ),
 	_yPrevPos( 0 ),
 	_xMin( 0 ),
@@ -65,11 +56,6 @@ void Food::eaten()
 	_gone = true;
 }
 
-void Food::getPos(int *x, int *y)
-{
-	*x = _xPos;
-	*y = _yPos;
-}
 
 void Food::getPrevPos(int *x, int *y)
 {

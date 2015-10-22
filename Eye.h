@@ -8,12 +8,12 @@
 class Eye
 {
 	protected:
-		double _xPos;
-		double _yPos;
-		double _xCenter;
-		double _yCenter;
+		float _xPos;
+		float _yPos;
+		float _xCenter;
+		float _yCenter;
 	public:
-		Eye(double xPos, double yPos);
+		Eye(float xPos, float yPos);
 		void update(int xAim, int yAim);
 		void render(SDL_Renderer *renderer);
 };

@@ -1,15 +1,6 @@
 #include "Player.h"
-#include <iostream>
-#include <math.h>
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_ttf.h>
 
-#include "Sprite.h"
-#include "Head.h"
-#include "BodyPart.h"
-
-Player::Player(double maxVel, double acceleration, double xPos, double yPos):
+Player::Player(float maxVel, float acceleration, float xPos, float yPos):
 	_head( maxVel, acceleration, xPos, yPos ),
 	_bodyParts(  )
 {
@@ -21,8 +12,8 @@ Player::Player(double maxVel, double acceleration, double xPos, double yPos):
 
 void Player::update(bool aim, int xMouse, int yMouse, const Uint8 *keyState, Food *food)
 {
-	double xHead = 0;
-	double yHead = 0;
+	float xHead = 0;
+	float yHead = 0;
 	_head.getPos(&xHead, &yHead);
 	
 	updateBody(xHead, yHead);
@@ -46,12 +37,12 @@ void Player::close()
 	//_sprite.close();
 }
 
-void Player::updateBody(int xHead, int yHead)
+void Player::updateBody(float xHead, float yHead)
 {
-	int xNextPos = xHead;
-	int yNextPos = yHead;
-	int xOldPos = 0;
-	int yOldPos = 0;
+	float xNextPos = xHead;
+	float yNextPos = yHead;
+	float xOldPos = 0;
+	float yOldPos = 0;
 	
 	for(std::vector<BodyPart>::iterator it = _bodyParts.begin(); it < _bodyParts.end(); ++it){
 		it->getPos(&xOldPos, &yOldPos);
@@ -72,18 +63,18 @@ void Player::renderBody(SDL_Renderer *renderer)
 bool Player::checkFood(Food *food)
 {
 	bool eat = false;
-	double xHeadPos = 0;
-	double yHeadPos = 0;
-	int xFoodPos = 0;
-	int yFoodPos = 0;
+	float xHeadPos = 0;
+	float yHeadPos = 0;
+	float xFoodPos = 0;
+	float yFoodPos = 0;
 	
 	getHeadPos(&xHeadPos, &yHeadPos);
 	food->getPos(&xFoodPos, &yFoodPos);
 	
-	double xDist = xHeadPos - xFoodPos;
-	double yDist = yHeadPos - yFoodPos;
+	float xDist = xHeadPos - xFoodPos;
+	float yDist = yHeadPos - yFoodPos;
 	
-	double totDist = sqrt(xDist*xDist + yDist*yDist);
+	float totDist = sqrt(xDist*xDist + yDist*yDist);
 	
 	if(totDist<20){
 		food->eaten();
@@ -92,14 +83,22 @@ bool Player::checkFood(Food *food)
 	return eat;
 }
 
-double Player::getHeadVel()
+int Player::getSize(){
+	return _bodyParts.size();
+}
+
+float Player::getHeadVel()
 {
 	return _head.getTotVel();
 }
 
-void Player::getHeadPos(double *x, double *y)
+void Player::getHeadPos(float *x, float *y)
 {
 	return _head.getPos(x, y);
+}
+
+void Player::getBodyPartPos(int partNum, float *x, float *y){
+	_bodyParts.at(partNum).getPos(x, y);
 }
 
 /*
@@ -112,7 +111,7 @@ void Player::getHeadPos(double *x, double *y)
 	int xDist = xPlayerPos - _xPos;
 	int yDist = yPlayerPos - _yPos;
 	
-	double totDist = sqrt(xDist*xDist + yDist*yDist);
+	float totDist = sqrt(xDist*xDist + yDist*yDist);
 	
 	if(totDist<20){
 		isEaten = _age;

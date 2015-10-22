@@ -1,6 +1,7 @@
 #ifndef _GAMEMANAGER_H_
 #define _GAMEMANAGER_H_
 
+#include <iostream>
 #include <vector>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -8,6 +9,7 @@
 
 #include "GC.h"
 #include "Background.h"
+#include "Renderable.h"
 #include "Player.h"
 #include "Food.h"
 #include "Circle.h"
@@ -34,6 +36,8 @@ class GameManager
 		void close();
 		bool checkState();
 		void updateCircles();
-		void addCircle(int x, int y, double increaseRate, double radius, double maxRadius);
+		void checkPlayerCollision();
+		void addCircle(int x, int y, float increaseRate, float radius, float maxRadius);
 };
+
 #endif

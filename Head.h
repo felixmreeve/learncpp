@@ -1,29 +1,30 @@
 #ifndef _HEAD_H_
 #define _HEAD_H_
 
+#include <iostream>
+#include <cmath>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 
-class Head
+#include "Renderable.h"
+
+class Head: public Renderable
 {
 	protected:
-		double _maxVel;
-		double _acceleration;
-		double _xPos;
-		double _yPos;
-		double _xVel;
-		double _yVel;
+		float _maxVel;
+		float _acceleration;
+		float _xVel;
+		float _yVel;
 		
 	public:
-		Head(double maxVel, double acceleration, double xPos, double yPos);
+		Head(float maxVel, float acceleration, float xPos, float yPos);
 		void update(bool aim, int xMouse, int yMouse, const Uint8 *keyState);
 		void render(SDL_Renderer *renderer);
 		
-		void acceleration(double *xAcc, double *yAcc, int xAim, int yAim);
-		void keyStateAcceleration(double *xAcc, double *yAcc, const Uint8 *keyState);
-		double getTotVel();
-		void getPos(double *x, double *y);
+		void acceleration(float *xAcc, float *yAcc, int xAim, int yAim);
+		void keyStateAcceleration(float *xAcc, float *yAcc, const Uint8 *keyState);
+		float getTotVel();
 };
 
 #endif

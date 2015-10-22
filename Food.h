@@ -1,17 +1,18 @@
 #ifndef _FOOD_H_
 #define _FOOD_H_
 
+#include <iostream>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 
+#include "GC.h"
 #include "Circle.h"
+#include "Renderable.h"
 
-class Food
+class Food: public Renderable
 {
 	protected:
-		int _xPos;
-		int _yPos;
 		int _xPrevPos;
 		int _yPrevPos;
 		int _xMin;
@@ -27,7 +28,6 @@ class Food
 		void close();
 		void place();
 		void eaten();
-		void getPos(int *x, int *y);
 		void getPrevPos(int *x, int *y);
 		int getAge();
 };
