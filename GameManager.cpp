@@ -170,14 +170,25 @@ void GameManager::updateCircles()
 void GameManager::checkPlayerCollision()
 {
 	int size = _player.getSize();
+	float xHead = 0;
+	float yHead = 0;
 	
-	for(int i = 0; i < size; i++){
+	_player.getHeadPos(&xHead, &yHead);
+	
+	for(int i = 5; i < size; i++){
 		float xBody;
 		float yBody;
 		
 		_player.getBodyPartPos(i, &xBody, &yBody);
-		std::cout << xBody << " " << yBody << std::endl;
 		
+		float xDist = xBody - xHead;
+		float yDist = yBody - yHead;
+		
+		float totDist = sqrt(xDist*xDist + yDist*yDist);
+		
+		if(totDist < 5){
+			addCircle(xBody, yBody, GC::PLAYER_CIRCLE_SPEED, GC::PLAYER_CIRCLE_START_SIZE, 400);
+		}
 	}
 	/*
 	float xHead = 0;
