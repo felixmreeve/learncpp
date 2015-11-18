@@ -4,8 +4,8 @@
 class GC
 {
 	public:
-		const static int SCREEN_WIDTH = 100;
-		const static int SCREEN_HEIGHT = 100;
+		const static int SCREEN_WIDTH = 500;
+		const static int SCREEN_HEIGHT = 500;
 		const static int TIME_FOR_FRAME = 10;
 		
 		const static float PLAYER_SPEED = 6;
