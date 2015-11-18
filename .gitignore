@@ -1,3 +1,6 @@
+# Main compiled program
+main
+
 # Compiled Object files
 *.slo
 *.lo
