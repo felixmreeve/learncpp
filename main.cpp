@@ -18,7 +18,6 @@ int main(int argc, char *argv[]){
 	//refresh loop
 	while(game.checkState()){
 		//int start = SDL_GetTicks();
-		
 		game.checkInput();
 		game.update();
 		game.render();
